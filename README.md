@@ -1,6 +1,7 @@
 # Anaropia RFM
 
 Virtual reality experiment framework to investigate the visual contribution to human balance.
+This version is associated with a publication currently under review. The preprint can be found [here](https://www.biorxiv.org/content/10.1101/2024.08.30.609158v2), the open science framework website with additional information can be found [here](https://osf.io/emskv/).
 
 ## Requirements
 
