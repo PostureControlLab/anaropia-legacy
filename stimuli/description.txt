@@ -1,0 +1,7 @@
+"Peterka 2002" contains the same stimuli used in the following paper: Peterka, R. J. (2002). Sensorimotor integration in human postural control. Journal of neurophysiology, 88(3), 1097-1118.
+peak-to-peak amplitudes for sequences vr_stim_1 to 5 are pp0.5, pp1, pp2, pp4 and pp8, respectively.
+
+"20s prts" contains 20s-long prts stimuli with velocities similar to the Peterka 2002 stimuli. The 20s long sequences have approximately similar velocities, when using half the amplitude of the 60.5-s long sequences of Peterka 2002.
+peak-to-peak amplitudes for sequences vr_stim_1 to 5 are therefore pp0.25, pp0.5, pp1, pp2 and pp4, respectively.
+
+"rfm" contains the stimuli described in this study: https://www.biorxiv.org/content/10.1101/2024.08.30.609158v2.full.pdf

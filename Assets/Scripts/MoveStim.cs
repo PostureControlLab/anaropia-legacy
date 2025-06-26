@@ -41,6 +41,8 @@ public class MoveStim : MonoBehaviour
     public string triggerInput;
     public float triggerThreshold;
 
+    [Header("Audio")]
+    public SystemPlaybackManager systemPlaybackManager;
 
     // Keymaps
     private Keymap keypadKeymap = new Keymap
@@ -157,6 +159,12 @@ public class MoveStim : MonoBehaviour
         {
             analogStim = GetComponent<AnalogStim>();
         }
+
+        // Pause audio when starting
+        if (systemPlaybackManager.useSystemPlayback)
+        {
+            systemPlaybackManager.Pause();
+        }
     }
 
     //private void CheckExternalTrigger()
@@ -232,6 +240,8 @@ public class MoveStim : MonoBehaviour
                 WriteMovementData(movementData, filePath.Replace(".csv", "_INCOMPLETE.csv"));
                 Debug.LogWarning($"({stimulusName}) Wrote INCOMPLETE movement data to: {filePath}");
                 stimRunning = false;
+
+                StopStimCallback();
             }
             if (Input.GetKeyDown(keymap.manualRecord))
             {
@@ -240,59 +250,76 @@ public class MoveStim : MonoBehaviour
 
             if (!stimRunning)
             {
+                bool started = false;
+
                 if (Input.GetKeyDown(keymap.stim1))
                 {
                     stimulusNum = 1;
                     stimRunning = false;
+                    started = true;
                 }
 
                 if (Input.GetKeyDown(keymap.stim2))
                 {
                     stimulusNum = 2;
                     stimRunning = false;
+                    started = true;
                 }
 
                 if (Input.GetKeyDown(keymap.stim3))
                 {
                     stimulusNum = 3;
                     stimRunning = false;
+                    started = true;
                 }
 
                 if (Input.GetKeyDown(keymap.stim4))
                 {
                     stimulusNum = 4;
                     stimRunning = false;
+                    started = true;
                 }
 
                 if (Input.GetKeyDown(keymap.stim5))
                 {
                     stimulusNum = 5;
                     stimRunning = false;
+                    started = true;
                 }
 
                 if (Input.GetKeyDown(keymap.stim6))
                 {
                     stimulusNum = 6;
                     stimRunning = false;
+                    started = true;
                 }
 
                 if (Input.GetKeyDown(keymap.stim7))
                 {
                     stimulusNum = 7;
                     stimRunning = false;
+                    started = true;
                 }
 
                 if (Input.GetKeyDown(keymap.stim8))
                 {
                     stimulusNum = 8;
                     stimRunning = false;
+                    started = true;
                 }
 
                 if (Input.GetKeyDown(keymap.stim9))
                 {
                     stimulusNum = 9;
                     stimRunning = false;
+                    started = true;
                 }
+
+                // If we started the stim in this update
+                if (started)
+                {
+                    StartStimCallback();
+                } 
             }
         }
 
@@ -350,6 +377,9 @@ public class MoveStim : MonoBehaviour
                     Debug.Log($"({stimulusName}) Stimulus finished. Resetting to 0.");
                     stimulusNum = 0;
                     stimRunning = false;
+
+                    StopStimCallback();
+
                     BeginReset();
 
                     var writtenPath = WriteMovementData(movementData, filePath);
@@ -415,6 +445,8 @@ public class MoveStim : MonoBehaviour
                 BeginReset();
 
                 isManualRecording = false;
+
+                StopStimCallback();
             }
             // Start manual recording
             else if (stimuliDir != "None")
@@ -425,6 +457,8 @@ public class MoveStim : MonoBehaviour
                 ClearMovementData(manualMovementData);
 
                 isManualRecording = true;
+
+                StartStimCallback();
             }
         }
 
@@ -664,6 +698,22 @@ public class MoveStim : MonoBehaviour
         if (isResetting)
         {
             GUI.Label(new Rect(10, 20, 390, 50), $"Resetting... ({Mathf.Floor(resetTime - elapsedResetTime)})");
+        }
+    }
+
+    private void StartStimCallback()
+    {
+        if (systemPlaybackManager.useSystemPlayback)
+        {
+            systemPlaybackManager.Play();
+        }
+    }
+
+    private void StopStimCallback()
+    {
+        if (systemPlaybackManager.useSystemPlayback)
+        {
+            systemPlaybackManager.Pause();
         }
     }
 }
