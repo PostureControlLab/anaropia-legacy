@@ -6,23 +6,26 @@ This version is associated with a publication currently under review. The prepri
 ## Requirements
 
 * Windows 10 or higher
-* Unity 2021.3.16f1
 * SteamVR
 * [LabJack LJM library](https://labjack.com/support/software/installers/ljm) (necessary to interface LabJack T4 or T7 DAQ devices)
+* Unity 2021.3.16f1 (only for own build)
 
 ## Setup
 
-1. Run `setup-repo.bat`. This will create the build directory and necessary filesystem links.
-2. Set controllers to never turn off in SteamVR settings.
-3. Assign the following tracker roles:
+1. Set controllers to never turn off in SteamVR settings.
+2. Assign the following tracker roles:
     - Shoulder tracker: Chest role
     - Hip tracker: Waist role
+
+## Setup - own build
+
+1. Run `setup-repo.bat`. This will create the build directory and necessary filesystem links.
 4. Run through Unity editor or build (recommended for better performance).
 
 ## Scenes
 
-- `LivingRoom` features a medium-size living room. ![](img/room.png)
-- `Lab` is a minimal laboratory environment, where players stand on top of a platform surrounded by darkness. This scene features the scaling screen. ![](img/lab.png)
+- `LivingRoom` features a medium-size living room with a cylindrical screen. ![](img/room.png)
+- rect screen features a rectangular screen
 
 ## Stimuli
 
