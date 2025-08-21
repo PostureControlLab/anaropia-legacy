@@ -904,6 +904,14 @@ namespace Valve.VR
                         onActiveChange -= (SteamVR_Action_Skeleton.ActiveChangeHandler)existingDelegate;
             }
 
+            if (onActiveBindingChange != null)
+            {
+                delegates = onActiveBindingChange.GetInvocationList();
+                if (delegates != null)
+                    foreach (Delegate existingDelegate in delegates)
+                        onActiveBindingChange -= (SteamVR_Action_Skeleton.ActiveChangeHandler)existingDelegate;
+            }
+
             if (onChange != null)
             {
                 delegates = onChange.GetInvocationList();
@@ -991,7 +999,7 @@ namespace Valve.VR
                 return;
             }
 
-            if (active)
+            if (active && skeletonActionData.bActive)
             {
                 if (onlyUpdateSummaryData == false)
                 {
@@ -1001,6 +1009,9 @@ namespace Valve.VR
 
                     for (int boneIndex = 0; boneIndex < tempBoneTransforms.Length; boneIndex++)
                     {
+                        if (float.IsNaN(tempBoneTransforms[boneIndex].position.v0))
+                                Debug.LogError("SKELETON NAN. ACTIVE");
+
                         // SteamVR's coordinate system is right handed, and Unity's is left handed.  The FBX data has its
                         // X axis flipped when Unity imports it, so here we need to flip the X axis as well
                         bonePositions[boneIndex].x = -tempBoneTransforms[boneIndex].position.v0;
