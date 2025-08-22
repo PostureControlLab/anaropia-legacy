@@ -65,7 +65,7 @@ public class ScreenTexture : MonoBehaviour
             myTexture.anisoLevel = 16;
             myTexture.filterMode = FilterMode.Trilinear;
             screenRenderer.material.mainTexture = myTexture;
-            rectScreenRenderer.materials[1].mainTexture = myTexture;
+            rectScreenRenderer.material.mainTexture = myTexture;
         }
     }
 }
