@@ -133,8 +133,7 @@ public class MoveStim : MonoBehaviour
         transform.SetParent(rotationCenter.transform, worldPositionStays: true);
 
         // Start position of this stimulus object
-        localStartPosition = rotationCenter.transform.localPosition;
-        localStartRotation = rotationCenter.transform.localRotation;
+        UpdateStartPositionAndRotation();
 
         // Set camera transform
         cameraTransform = Camera.main.transform;
@@ -403,6 +402,9 @@ public class MoveStim : MonoBehaviour
                         MissingFieldFound = null,
                         //HeaderValidated = null
                     };
+
+                    var files = Directory.GetFiles(Path.Combine(basePath, "stimuli", stimuliDir));
+
                     using (var sr = new StreamReader(currentStimulusPath, System.Text.Encoding.UTF8))
                     using (var csv = new CsvReader(sr, config))
                     {
@@ -425,9 +427,9 @@ public class MoveStim : MonoBehaviour
 
                     startTime = Time.realtimeSinceStartup;
                 }
-                catch (FileNotFoundException)
+                catch (FileNotFoundException e)
                 {
-                    Debug.LogError("File named vr_stim_" + stimulusNum + ".csv not found. Ensure stimulus file is present for the key pressed");
+                    Debug.LogError($"File named vr_stim_{stimulusNum}.csv not found at {currentStimulusPath}. Ensure stimulus file is present for the key pressed. {e.Message}");
                     stimulusNum = 0;
                     stimRunning = false;
                 }
@@ -467,6 +469,12 @@ public class MoveStim : MonoBehaviour
             var manualElapsedTime = Time.realtimeSinceStartup - manualStartTime;
             TrackMovement(manualMovementData, manualElapsedTime, stimRecord);
         }
+    }
+
+    public void UpdateStartPositionAndRotation()
+    {
+        localStartPosition = rotationCenter.transform.localPosition;
+        localStartRotation = rotationCenter.transform.localRotation;
     }
 
     private void BeginReset()

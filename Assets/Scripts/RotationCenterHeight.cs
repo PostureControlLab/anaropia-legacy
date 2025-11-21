@@ -8,8 +8,14 @@ public class RotationCenterHeight : MonoBehaviour
     public Vector3 screenRotationCenter = new Vector3(0, 0.088f, 0);
     public Vector3 roomRotationCenter = new Vector3(0, 0.088f, 0);
 
+    public MoveStim screenStim;
+    public MoveStim rectScreenStim;
+    public MoveStim roomStim;
+
     public Transform screenCenter;
     public Transform roomCenter;
+    public Transform screenCenterAnchor;
+    public Transform roomCenterAnchor;
 
     [Header("UI")]
     public TMP_InputField screenInputFieldX;
@@ -63,8 +69,15 @@ public class RotationCenterHeight : MonoBehaviour
     {
         if (screenCenter != null)
         {
+            var anchorPos = screenCenterAnchor.position;
+            var anchorRot = screenCenterAnchor.rotation;
+
             screenCenter.localPosition = center;
             this.screenRotationCenter = center;
+
+            screenCenterAnchor.SetPositionAndRotation(anchorPos, anchorRot);
+            screenStim.UpdateStartPositionAndRotation();
+            rectScreenStim.UpdateStartPositionAndRotation();
         }
     }
 
@@ -72,8 +85,14 @@ public class RotationCenterHeight : MonoBehaviour
     {
         if (roomCenter != null)
         {
+            var anchorPos = roomCenterAnchor.position;
+            var anchorRot = roomCenterAnchor.rotation;
+
             roomCenter.localPosition = center;
             this.roomRotationCenter = center;
+
+            roomCenterAnchor.SetPositionAndRotation(anchorPos, anchorRot);    
+            roomStim.UpdateStartPositionAndRotation();
         }
     }
 }

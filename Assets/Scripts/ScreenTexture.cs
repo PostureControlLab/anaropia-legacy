@@ -13,6 +13,7 @@ public class ScreenTexture : MonoBehaviour
     public Renderer screenRenderer;
     public Renderer rectScreenRenderer;
     public TMP_Dropdown textureDropdown;
+    public Toggle textureFilteringToggle;
     public string defaultTextureName;
 
     private FileInfo[] textureFiles;
@@ -42,6 +43,13 @@ public class ScreenTexture : MonoBehaviour
         var textureIndex = defaultTextureIndex >= 0 ? defaultTextureIndex : 0;
         LoadScreenTexture(textureFiles[textureIndex].FullName);
         textureDropdown.SetValueWithoutNotify(textureIndex);
+
+        textureFilteringToggle.onValueChanged.AddListener(value =>
+        {
+            SetTextureFiltering(value);
+        });
+        SetTextureFiltering(true);
+        textureFilteringToggle.SetIsOnWithoutNotify(true);
     }
 
     private void LoadScreenTexture(string path)
@@ -67,5 +75,11 @@ public class ScreenTexture : MonoBehaviour
             screenRenderer.material.mainTexture = myTexture;
             rectScreenRenderer.material.mainTexture = myTexture;
         }
+    }
+
+    private void SetTextureFiltering(bool enabled)
+    {
+        screenRenderer.material.mainTexture.filterMode = enabled ? FilterMode.Trilinear : FilterMode.Point;
+        rectScreenRenderer.material.mainTexture.filterMode = enabled ? FilterMode.Trilinear : FilterMode.Point;
     }
 }
